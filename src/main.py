@@ -42,6 +42,23 @@ def quiz_user():
         print(f"Your final score is {score}/{num_words} ({percentage:.2f}%).") # After the quiz, show the user's final score
         play = input("Would you like to play again? (yes/no) ") # Ask the user if they want to play again
 
+def new_vocab():
+    add_vocab = input("Would you like to add a new vocabulary word? (yes/no) ") # Ask the user if they want to add a new vocabulary word
+    
+    while add_vocab.lower() == "yes": # Loop to allow the user to add multiple vocabulary words
+    
+        new_japanese = input("Enter the new Japanese word: ") # Get the new Japanese word from the user
+        new_english = input("Enter the English translation: ") # Get the English translation from the user
+
+        new_entry = {"japanese": new_japanese, "english": new_english} # Create a new dictionary entry for the vocabulary word
+        parsed_vocab.append(new_entry) # Add the new entry to the existing vocabulary list
+
+        add_vocab = input("Would you like to add another vocabulary word? (yes/no) ") # Ask the user if they want to add another word
+
+    with open("Vocab_List.json", "w") as file: # Open the JSON file in write mode to save the updated vocabulary list
+        json.dump(parsed_vocab, file, indent=4) # Write the updated vocabulary list back to the JSON file with indentation for readability
+
 # The main entry point of the script    
 if __name__ == "__main__":
+    new_vocab() # Allow the user to add new vocabulary words before starting the quiz
     quiz_user() # Start the quiz when the script is run
