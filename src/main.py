@@ -13,17 +13,15 @@ def quiz_user():
 
     while play.lower() == "yes": # Loop to allow the user to take the quiz
 
-        # Ask the user how many words they want to be quizzed on
-        num_words = int(input("Welcome! How many words would you like to be quizzed on? ")) 
-
-        if num_words <= 0:
-            print("Please enter a positive number of words to be quizzed on.") # If the user enters a non-positive number, prompt them to enter a valid number
-            num_words = int(input("How many words would you like to be quizzed on? ")) # Ask the user again for a valid number of words
-        elif num_words > len(parsed_vocab):
-            print(f"Sorry, we only have {len(parsed_vocab)} words available. Please enter a number less than or equal to {len(parsed_vocab)}.") # If the user asks for more words than are available, inform them of the maximum number
-            num_words = int(input("How many words would you like to be quizzed on? ")) # Ask the user again for a valid number of words
-        else:
-            return quiz_user() # If the user enters a valid number, start the quiz
+        while True: # Loop to validate the user's input for the number of words
+            try:
+                # Get the number of words the user wants to be quizzed on, and inform them of how many words are available
+                num_words = int(input(f"How many words would you like to be quizzed on? There are currently {len(parsed_vocab)} words available. ")) 
+                if 1 <= num_words <= len(parsed_vocab): # Check if the number of words is valid
+                    break # If the input is valid, exit the loop
+                print(f"Please enter a number between 1 and {len(parsed_vocab)}.") # If the input is invalid, prompt the user to enter a valid number
+            except ValueError: # Handle the case where the user enters a non-integer value
+                print("Invalid input. Please enter a valid number.") # Inform the user of the invalid input and prompt them again
     
         # Randomly select the specified number of words from the vocabulary data
         quiz_words = random.sample(parsed_vocab, min(num_words, len(parsed_vocab))) # Ensure we don't ask for more words than we have
