@@ -57,31 +57,37 @@ def new_vocab():
         json.dump(parsed_vocab, file, indent=4) # Write the updated vocabulary list back to the JSON file with indentation for readability
 
 def user_options():
+
     print("Welcome to the Japanese Learning App!") # Welcome message for the user
     print("You can choose to add new vocabulary words or take a quiz to test your knowledge.") # Inform the user of their options
-    print("Let's get started!") # Encourage the user to start using the app 
-    
-    user_choice = input("Please choose one of the following options:\n1. Add new vocabulary words\n2. Take a quiz\n3. Exit\n\nEnter the number of your choice: ") # Prompt the user to choose an option
+    print("Let's get started!\n") # Encourage the user to start using the app 
 
-    while user_choice not in ["1","2","3"]: # Validate the user's input to ensure it's one of the valid options
-        while True: # Loop to validate the user's input for the options
-            try:
-                if user_choice in ["1","2","3"]: # Check if the input is valid
-                    break # If the input is valid, exit the loop
-            except ValueError:
-                pass # If the input is invalid, ignore the error and prompt the user again
-        user_choice = input("Invalid choice. Please enter 1, 2, or 3: ") # If the input is invalid, prompt the user again
+    user_choice = menu_input() # Call the function to prompt the user for their choice of action
     
     while user_choice != "3": # Loop to allow the user to continue using the app until they choose to exit
         if user_choice == "1": # If the user chooses to add new vocabulary words
             new_vocab() # Call the function to add new vocabulary words
-            user_choice = input("Please choose one of the following options:\n1. Add new vocabulary words\n2. Take a quiz\n3. Exit\n\nEnter the number of your choice: ") # Prompt the user to choose an option again after adding new words
+            user_choice = menu_input() # Call the function to prompt the user for their next action after adding new words
         elif user_choice == "2": # If the user chooses to take a quiz
             quiz_user() # Call the function to start the quiz
-            user_choice = input("Please choose one of the following options:\n1. Add new vocabulary words\n2. Take a quiz\n3. Exit\n\nEnter the number of your choice: ") # Prompt the user to choose an option again after taking the quiz
-       
+            user_choice = menu_input() # Call the function to prompt the user for their next action after taking the quiz
+
     print("Thank you for using the Japanese Learning App! Goodbye!") # Farewell message for the user
     exit() # Exit the program   
+
+def menu_input():
+    
+    user_choice = input("Please choose one of the following options:\n1. Add new vocabulary words\n2. Take a quiz\n3. Exit the app\n") # Prompt the user to choose an option
+
+    while True: # Loop to validate the user's input for the options
+        try:
+            if user_choice in ["1","2","3"]: # Check if the input is valid
+                break # If the input is valid, exit the loop
+        except ValueError:
+            pass # If the input is invalid, ignore the error and prompt the user again
+        user_choice = input("Invalid choice. Please enter 1, 2, or 3: ") # If the input is invalid, prompt the user again
+
+    return user_choice # Return the valid user choice to the calling function
 
 # The main entry point of the script    
 if __name__ == "__main__":
